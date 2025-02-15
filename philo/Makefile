@@ -1,6 +1,9 @@
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror
-SRC		= main.c
+SRC		= src/main.c \
+		  src/input/input.c \
+		  src/threads/spawn.c \
+		  src/init/init.c
 OBJ		= $(SRC:.c=.o)
 INC		= lib/
 NAME	= philo
