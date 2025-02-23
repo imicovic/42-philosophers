@@ -6,7 +6,7 @@
 /*   By: imicovic <imicovic@student.42wolfsburg.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 11:18:12 by imicovic          #+#    #+#             */
-/*   Updated: 2025/02/23 16:00:07 by imicovic         ###   ########.fr       */
+/*   Updated: 2025/02/23 19:58:07 by igormic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 # include <stddef.h>
 # include <limits.h>
 # include <unistd.h>
-# include <sys/time.h>
 # include <pthread.h>
 # include <stdbool.h>
+# include <sys/time.h>
 
 typedef enum e_op
 {
@@ -35,6 +35,16 @@ typedef enum e_format
 	MICROSEC
 }	t_format;
 
+typedef enum e_status
+{
+	FORK = 1,
+	EAT,
+	SLEEP,
+	THINK,
+	FULL,
+	DEAD
+}	t_status;
+
 typedef pthread_mutex_t	t_mtx;
 
 typedef struct s_data	t_data;
@@ -43,6 +53,7 @@ typedef struct s_philo
 {
 	pthread_t	thread;
 	int64_t		id;
+	uint64_t	lmt;
 	t_mtx		*first;
 	t_mtx		*second;
 	t_data		*data;
@@ -50,15 +61,22 @@ typedef struct s_philo
 
 typedef struct s_data
 {
-	t_philo	*philos;
-	t_mtx	*forks;
-	int64_t	all;
-	t_mtx	m_all;
-	int64_t	tc;
-	int64_t	ttd;
-	int64_t	tts;
-	int64_t	tte;
-	int64_t	mnum;
+	t_philo		*philos;
+	t_mtx		*forks;
+	t_mtx		m_all;
+	t_mtx		m_finished;
+	t_mtx		m_run;
+	t_mtx		m_write;
+	bool		all;
+	bool		run;
+	bool		finished;
+	pthread_t	monitor;
+	uint64_t	start;
+	int64_t		tc;
+	int64_t		ttd;
+	int64_t		tts;
+	int64_t		tte;
+	int64_t		mnum;
 }	t_data;
 
 /* inupt/input.c */
@@ -76,8 +94,12 @@ void		init_vars(t_data *data);
 
 /* utils/destroy_utils.c */
 
-void		inc_dec(t_mtx *mutex, int64_t *addr, t_op op);
 void		fork_destroy(t_data *data);
+
+/* utils/utils.c */
+
+void		status_put(t_philo *philo, t_status status);
+void		inc_dec(t_mtx *mutex, int64_t *addr, t_op op);
 
 /* utils/debug_utils.c */
 
@@ -94,10 +116,15 @@ int64_t		get_num(t_mtx mutex, int64_t *addr);
 /* utils/time_utils.c */
 
 void		real_sleep(uint64_t usec);
+uint64_t	get_timestamp(t_data *data);
 uint64_t	get_time(t_format time_format);
 
-/* spawn/simulation.c */
+/* threads/simulation.c */
 
 void		simulation(t_data *data);
+
+/* threads/montitor.c */
+
+void	*monitor(void *v_data);
 
 #endif

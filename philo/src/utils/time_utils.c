@@ -6,7 +6,7 @@
 /*   By: imicovic <imicovic@student.42wolfsburg.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 15:26:19 by imicovic          #+#    #+#             */
-/*   Updated: 2025/02/23 15:49:44 by imicovic         ###   ########.fr       */
+/*   Updated: 2025/02/23 18:31:51 by igormic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,9 @@ void	real_sleep(uint64_t usec)
 				;
 		}
 	}
+}
+
+uint64_t	get_timestamp(t_data *data)
+{
+	return (get_time(MILISEC) - data->start);
 }

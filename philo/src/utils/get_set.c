@@ -6,7 +6,7 @@
 /*   By: imicovic <imicovic@student.42wolfsburg.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 14:02:00 by imicovic          #+#    #+#             */
-/*   Updated: 2025/02/23 14:12:43 by imicovic         ###   ########.fr       */
+/*   Updated: 2025/02/23 18:18:27 by igormic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	set_bool(t_mtx mutex, bool *addr, bool val)
 	pthread_mutex_unlock(&mutex);
 }
 
-int64_t	get_num(t_mtx mutex, long *addr)
+int64_t	get_num(t_mtx mutex, int64_t *addr)
 {
 	int64_t	ret;
 
@@ -39,7 +39,7 @@ int64_t	get_num(t_mtx mutex, long *addr)
 	return (ret);
 }
 
-void	set_num(t_mtx mutex, long *addr, long val)
+void	set_num(t_mtx mutex, int64_t *addr, int64_t val)
 {
 	pthread_mutex_lock(&mutex);
 	*addr = val;
