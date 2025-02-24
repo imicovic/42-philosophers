@@ -6,7 +6,7 @@
 /*   By: imicovic <imicovic@student.42wolfsburg.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 14:02:00 by imicovic          #+#    #+#             */
-/*   Updated: 2025/02/23 18:18:27 by igormic          ###   ########.fr       */
+/*   Updated: 2025/02/24 14:21:44 by imicovic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int64_t	get_num(t_mtx mutex, int64_t *addr)
 	return (ret);
 }
 
-void	set_num(t_mtx mutex, int64_t *addr, int64_t val)
+void	set_num(t_mtx mutex, uint64_t *addr, uint64_t val)
 {
 	pthread_mutex_lock(&mutex);
 	*addr = val;

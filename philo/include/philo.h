@@ -6,7 +6,7 @@
 /*   By: imicovic <imicovic@student.42wolfsburg.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 11:18:12 by imicovic          #+#    #+#             */
-/*   Updated: 2025/02/23 19:58:07 by igormic          ###   ########.fr       */
+/*   Updated: 2025/02/24 14:21:54 by imicovic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_philo
 	pthread_t	thread;
 	int64_t		id;
 	uint64_t	lmt;
+	t_mtx		m_lmt;
 	t_mtx		*first;
 	t_mtx		*second;
 	t_data		*data;
@@ -109,13 +110,14 @@ void		print_philo(t_philo *philo);
 /* utils/get_set.c */
 
 void		set_bool(t_mtx mutex, bool *addr, bool val);
-void		set_num(t_mtx mutex, int64_t *addr, int64_t val);
+void		set_num(t_mtx mutex, uint64_t *addr, uint64_t val);
 bool		get_bool(t_mtx mutex, bool *addr);
 int64_t		get_num(t_mtx mutex, int64_t *addr);
 
 /* utils/time_utils.c */
 
 void		real_sleep(uint64_t usec);
+void		wait_all(t_data *data);
 uint64_t	get_timestamp(t_data *data);
 uint64_t	get_time(t_format time_format);
 
@@ -125,6 +127,10 @@ void		simulation(t_data *data);
 
 /* threads/montitor.c */
 
-void	*monitor(void *v_data);
+void		*monitor(void *v_data);
+
+/* threads/dinner.c */
+
+void	dinner(t_philo * philo);
 
 #endif

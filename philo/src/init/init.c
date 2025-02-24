@@ -6,7 +6,7 @@
 /*   By: imicovic <imicovic@student.42wolfsburg.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 11:56:02 by imicovic          #+#    #+#             */
-/*   Updated: 2025/02/23 19:43:05 by igormic          ###   ########.fr       */
+/*   Updated: 2025/02/24 14:20:24 by imicovic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,11 @@ static t_philo	*philo_init(t_data *data)
 	i = -1;
 	while (++i < count)
 	{
-		philos[i].lmt = 0;
 		philos[i].data = data;
+		philos[i].lmt = data->start;
 		philos[i].id = i + 1;
 		ass_forks(philos + i, data->forks);
+		pthread_mutex_init(&philos[i].m_lmt, NULL);
 	}
 	return (philos);
 }

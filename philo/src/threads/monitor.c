@@ -6,7 +6,7 @@
 /*   By: igormic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 18:43:36 by igormic           #+#    #+#             */
-/*   Updated: 2025/02/23 19:45:34 by igormic          ###   ########.fr       */
+/*   Updated: 2025/02/24 14:27:12 by imicovic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,11 @@ void	*monitor(void *v_data)
 	while (1)
 	{
 		if (status_check(data))
+		{
+			set_bool(data->m_finished, &data->finished, true);
 			break ;
-		real_sleep(5);
+		}
+		real_sleep(10);
 	}
-	set_bool(data->m_finished, &data->finished, true);
 	return (NULL);
 }
