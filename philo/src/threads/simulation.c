@@ -6,7 +6,7 @@
 /*   By: imicovic <imicovic@student.42wolfsburg.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 14:17:22 by imicovic          #+#    #+#             */
-/*   Updated: 2025/02/24 14:43:56 by imicovic         ###   ########.fr       */
+/*   Updated: 2025/02/24 21:10:22 by igormic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,15 @@ void	*routine(void *v_philo)
 
 	philo = (t_philo *) v_philo;
 	wait_all(philo->data);
+	set_num(philo->m_lmt, &philo->lmt, get_time(MILISEC));
 	inc_dec(&philo->data->m_run, &philo->data->run, INC);
 	while (!get_bool(philo->data->m_finished, &philo->data->finished))
 	{
-		// Check if philosopher is full
+		if (is_full(philo))
+			break ;
 		dinner(philo);
-		real_sleep(100);
+		usleep(100);
+		//real_sleep(10);
 	}
 	return (NULL);
 }
@@ -53,9 +56,9 @@ void	simulation(t_data *data)
 		return ;
 	else if (data->mnum == 0)
 		return ;
-	pthread_create(&data->monitor, NULL, monitor, (void *) data);
 	spawn(data);
+	pthread_create(&data->monitor, NULL, monitor, (void *) data);
 	set_bool(data->m_all, &data->all, true);
-	join(data);
 	pthread_join(data->monitor, NULL);
+	join(data);
 }

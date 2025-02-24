@@ -6,42 +6,44 @@
 /*   By: igormic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 18:43:36 by igormic           #+#    #+#             */
-/*   Updated: 2025/02/24 15:05:25 by imicovic         ###   ########.fr       */
+/*   Updated: 2025/02/24 21:05:17 by igormic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/philo.h"
 
-static int8_t	status_check(t_data *data)
+static bool	is_dead(t_philo *philo)
 {
-	int64_t	i;
+	uint64_t	elapsed;
 
-	i = -1;
-	pthread_mutex_lock(&data->m_all);
-	while (++i < data->tc)
-	{
-		if (get_time(MILISEC) - (data->philos + i)->lmt >= (uint64_t) data->ttd)
-			return (1);
-	}
-	pthread_mutex_unlock(&data->m_all);
-	return (0);
+	elapsed = get_time(MILISEC) - get_num(philo->m_lmt, &philo->lmt);
+	return (elapsed > (uint64_t) philo->data->ttd);
+}
+
+bool	is_finished(t_data *data)
+{
+	return (get_bool(data->m_finished, &data->finished));
 }
 
 void	*monitor(void *v_data)
 {
 	t_data	*data;
+	int64_t	i;
 
 	data = (t_data *) v_data;
-	while (get_num(data->m_run, &data->run) < data->tc)
-		real_sleep(2);
-	while (1)
+	while (get_num(data->m_run, &data->run) != data->tc)
+		real_sleep(1);
+	while (!is_finished(data))
 	{
-		if (status_check(data))
+		i = -1;
+		while (++i < data->tc && !is_finished(data))
 		{
-			set_bool(data->m_finished, &data->finished, true);
-			break ;
+			if (is_dead(data->philos + i))
+			{
+				set_bool(data->m_finished, &data->finished, true);
+				status_put(data->philos + i, DEAD);
+			}
 		}
-		//real_sleep(10);
 	}
 	return (NULL);
 }

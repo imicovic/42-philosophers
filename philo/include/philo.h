@@ -6,7 +6,7 @@
 /*   By: imicovic <imicovic@student.42wolfsburg.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 11:18:12 by imicovic          #+#    #+#             */
-/*   Updated: 2025/02/24 14:41:17 by imicovic         ###   ########.fr       */
+/*   Updated: 2025/02/24 21:03:37 by igormic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ typedef struct s_philo
 	pthread_t	thread;
 	int64_t		id;
 	uint64_t	lmt;
+	uint64_t	meals;
+	t_mtx		m_meals;
 	t_mtx		m_lmt;
 	t_mtx		*first;
 	t_mtx		*second;
@@ -72,7 +74,7 @@ typedef struct s_data
 	bool		finished;
 	pthread_t	monitor;
 	uint64_t	start;
-	int64_t		run;
+	uint64_t	run;
 	int64_t		tc;
 	int64_t		ttd;
 	int64_t		tts;
@@ -100,7 +102,8 @@ void		fork_destroy(t_data *data);
 /* utils/utils.c */
 
 void		status_put(t_philo *philo, t_status status);
-void		inc_dec(t_mtx *mutex, int64_t *addr, t_op op);
+void		inc_dec(t_mtx *mutex, uint64_t *addr, t_op op);
+bool		is_full(t_philo *philo);
 
 /* utils/debug_utils.c */
 
@@ -112,7 +115,7 @@ void		print_philo(t_philo *philo);
 void		set_bool(t_mtx mutex, bool *addr, bool val);
 void		set_num(t_mtx mutex, uint64_t *addr, uint64_t val);
 bool		get_bool(t_mtx mutex, bool *addr);
-int64_t		get_num(t_mtx mutex, int64_t *addr);
+int64_t		get_num(t_mtx mutex, uint64_t *addr);
 
 /* utils/time_utils.c */
 
@@ -128,6 +131,7 @@ void		simulation(t_data *data);
 /* threads/montitor.c */
 
 void		*monitor(void *v_data);
+bool		is_finished(t_data *data);
 
 /* threads/dinner.c */
 
