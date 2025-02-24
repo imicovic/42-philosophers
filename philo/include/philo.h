@@ -6,7 +6,7 @@
 /*   By: imicovic <imicovic@student.42wolfsburg.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 11:18:12 by imicovic          #+#    #+#             */
-/*   Updated: 2025/02/24 14:21:54 by imicovic         ###   ########.fr       */
+/*   Updated: 2025/02/24 14:41:17 by imicovic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,10 @@ typedef struct s_data
 	t_mtx		m_run;
 	t_mtx		m_write;
 	bool		all;
-	bool		run;
 	bool		finished;
 	pthread_t	monitor;
 	uint64_t	start;
+	int64_t		run;
 	int64_t		tc;
 	int64_t		ttd;
 	int64_t		tts;

@@ -6,7 +6,7 @@
 /*   By: imicovic <imicovic@student.42wolfsburg.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 14:17:22 by imicovic          #+#    #+#             */
-/*   Updated: 2025/02/24 14:24:27 by imicovic         ###   ########.fr       */
+/*   Updated: 2025/02/24 14:43:56 by imicovic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	*routine(void *v_philo)
 
 	philo = (t_philo *) v_philo;
 	wait_all(philo->data);
+	inc_dec(&philo->data->m_run, &philo->data->run, INC);
 	while (!get_bool(philo->data->m_finished, &philo->data->finished))
 	{
 		// Check if philosopher is full
