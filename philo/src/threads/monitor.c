@@ -6,7 +6,7 @@
 /*   By: igormic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 18:43:36 by igormic           #+#    #+#             */
-/*   Updated: 2025/02/24 21:05:17 by igormic          ###   ########.fr       */
+/*   Updated: 2025/02/25 11:15:40 by imicovic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static bool	is_dead(t_philo *philo)
 {
 	uint64_t	elapsed;
 
+	if (get_num(philo->m_meals, &philo->meals) == philo->data->mnum)
+		return (false);
 	elapsed = get_time(MILISEC) - get_num(philo->m_lmt, &philo->lmt);
 	return (elapsed > (uint64_t) philo->data->ttd);
 }
@@ -42,6 +44,7 @@ void	*monitor(void *v_data)
 			{
 				set_bool(data->m_finished, &data->finished, true);
 				status_put(data->philos + i, DEAD);
+				return (NULL);
 			}
 		}
 	}
