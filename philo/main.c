@@ -6,7 +6,7 @@
 /*   By: imicovic <imicovic@student.42wolfsburg.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 11:17:33 by imicovic          #+#    #+#             */
-/*   Updated: 2025/02/25 10:40:26 by imicovic         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:20:42 by imicovic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	main(int32_t argc, char **argv)
 		return (-1);
 	}
 	data = init(argc, argv);
-	//print_data(data);
 	if (!data)
 		return (-2);
 	simulation(data);
+	cleanup(data);
 }

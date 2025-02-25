@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igormic <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: imicovic <imicovic@student.42wolfsburg.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/23 18:43:36 by igormic           #+#    #+#             */
-/*   Updated: 2025/02/25 11:15:40 by imicovic         ###   ########.fr       */
+/*   Created: 2025/02/25 13:10:58 by imicovic          #+#    #+#             */
+/*   Updated: 2025/02/25 15:45:29 by imicovic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,17 @@ static bool	is_dead(t_philo *philo)
 {
 	uint64_t	elapsed;
 
-	if (get_num(philo->m_meals, &philo->meals) == philo->data->mnum)
+	if (is_full(philo))
 		return (false);
-	elapsed = get_time(MILISEC) - get_num(philo->m_lmt, &philo->lmt);
-	return (elapsed > (uint64_t) philo->data->ttd);
+	elapsed = get_time(MILISEC) - get_num(&philo->m_lmt, &philo->lmt);
+	if (elapsed > (uint64_t) philo->data->ttd)
+		return (true);
+	return (false);
 }
 
 bool	is_finished(t_data *data)
 {
-	return (get_bool(data->m_finished, &data->finished));
+	return (get_bool(&data->m_finished, &data->finished));
 }
 
 void	*monitor(void *v_data)
@@ -33,7 +35,7 @@ void	*monitor(void *v_data)
 	int64_t	i;
 
 	data = (t_data *) v_data;
-	while (get_num(data->m_run, &data->run) != data->tc)
+	while (get_num(&data->m_run, &data->run) < data->tc)
 		real_sleep(1);
 	while (!is_finished(data))
 	{
@@ -42,9 +44,8 @@ void	*monitor(void *v_data)
 		{
 			if (is_dead(data->philos + i))
 			{
-				set_bool(data->m_finished, &data->finished, true);
+				set_bool(&data->m_finished, &data->finished, true);
 				status_put(data->philos + i, DEAD);
-				return (NULL);
 			}
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: imicovic <imicovic@student.42wolfsburg.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 15:26:19 by imicovic          #+#    #+#             */
-/*   Updated: 2025/02/24 13:50:24 by imicovic         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:50:39 by imicovic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	real_sleep(uint64_t usec)
 		elapsed = get_time(MICROSEC) - start;
 		rem = usec - elapsed;
 		if (rem > 1e3)
-			usleep(usec / 2);
+			usleep(rem / 2);
 		else
 		{
 			while (get_time(MICROSEC) - start < usec)
@@ -47,11 +47,14 @@ void	real_sleep(uint64_t usec)
 
 uint64_t	get_timestamp(t_data *data)
 {
-	return (get_time(MILISEC) - data->start);
+	uint64_t	current;
+
+	current = get_time(MILISEC);
+	return (current - data->start);
 }
 
 void	wait_all(t_data *data)
 {
-	while (!get_bool(data->m_all, &data->all))
+	while (!get_bool(&data->m_all, &data->all))
 		;
 }

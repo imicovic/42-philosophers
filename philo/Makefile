@@ -8,6 +8,9 @@ NAME	= philo
 
 all: $(NAME)
 
+sanitize: CFLAGS += -fsanitize=thread
+sanitize: re
+
 $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) main.c $(OBJ) -o $(NAME)
 

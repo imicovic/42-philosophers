@@ -6,7 +6,7 @@
 /*   By: igormic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 19:48:50 by igormic           #+#    #+#             */
-/*   Updated: 2025/02/25 10:27:25 by imicovic         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:06:44 by imicovic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	status_put(t_philo *philo, t_status status)
 	else if (status == FULL)
 		printf("%ju philos are full\n", get_timestamp(philo->data));
 	else
-		printf("\t%ju %ju philo died\n", get_timestamp(philo->data), philo->id);
+		printf("%ju %ju died\n", get_timestamp(philo->data), philo->id);
 	pthread_mutex_unlock(&philo->data->m_write);
 }
 
@@ -44,6 +44,6 @@ bool	is_full(t_philo *philo)
 {
 	uint64_t	count;
 
-	count = get_num(philo->m_meals, &philo->meals);
+	count = get_num(&philo->m_meals, &philo->meals);
 	return ((int64_t) count == philo->data->mnum);
 }

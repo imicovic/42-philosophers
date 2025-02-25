@@ -6,7 +6,7 @@
 /*   By: imicovic <imicovic@student.42wolfsburg.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 14:17:22 by imicovic          #+#    #+#             */
-/*   Updated: 2025/02/25 11:19:15 by imicovic         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:53:14 by imicovic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,15 @@ void	*routine(void *v_philo)
 
 	philo = (t_philo *) v_philo;
 	wait_all(philo->data);
-	set_num(philo->m_lmt, &philo->lmt, get_time(MILISEC));
 	inc_dec(&philo->data->m_run, &philo->data->run, INC);
-	while (!get_bool(philo->data->m_finished, &philo->data->finished))
+	set_num(&philo->m_lmt, &philo->lmt, get_time(MILISEC));
+	while (!is_finished(philo->data))
 	{
 		if (is_full(philo))
 			break ;
 		dinner(philo);
-		real_sleep(200);
+		real_sleep(130);
 	}
-	inc_dec(&philo->data->m_run, &philo->data->run, DEC);
-	//if (get_num(philo->data->m_run, &philo->data->run) == 0)
-	//	set_bool(philo->data->m_finished, &philo->data->finished, true);
 	return (NULL);
 }
 
@@ -59,13 +56,14 @@ void	simulation(t_data *data)
 	else if (data->mnum == 0)
 		return ;
 	spawn(data);
-	//pthread_create(&data->monitor, NULL, monitor, (void *) data);
-	set_bool(data->m_all, &data->all, true);
+	set_bool(&data->m_all, &data->all, true);
+	pthread_create(&data->monitor, NULL, monitor, (void *) data);
+	set_num(&data->m_write, &data->start, get_time(MILISEC));
 	join(data);
-	//if (is_full(data->philos))
-	//{
-	set_bool(data->m_finished, &data->finished, true);
-	status_put(data->philos, FULL);
-	//}
-	//pthread_join(data->monitor, NULL);
+	if (data->mnum != -1)
+	{
+		set_bool(&data->m_finished, &data->finished, true);
+		status_put(data->philos, FULL);
+	}
+	pthread_detach(data->monitor);
 }
