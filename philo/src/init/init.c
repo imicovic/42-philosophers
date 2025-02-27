@@ -6,7 +6,7 @@
 /*   By: imicovic <imicovic@student.42wolfsburg.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 11:56:02 by imicovic          #+#    #+#             */
-/*   Updated: 2025/02/24 20:58:38 by igormic          ###   ########.fr       */
+/*   Updated: 2025/02/27 13:15:19 by imicovic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ static t_data	*data_init(int32_t argc, char **argv)
 		data->mnum = ft_atoi(argv[5]);
 	else
 		data->mnum = -1;
+	if (data->tc % 2 && data->tts < data->tte * 2)
+		data->ttt = data->tte * 2 - data->tts;
+	else
+		data->ttt = 0;
 	return (data);
 }
 

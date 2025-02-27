@@ -6,7 +6,7 @@
 /*   By: igormic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 19:48:50 by igormic           #+#    #+#             */
-/*   Updated: 2025/02/25 16:06:44 by imicovic         ###   ########.fr       */
+/*   Updated: 2025/02/27 13:30:50 by imicovic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void	status_put(t_philo *philo, t_status status)
 {
 	pthread_mutex_lock(&philo->data->m_write);
 	if (status == FORK)
-		printf("%ju %ju has taken a fork\n", get_timestamp(philo->data), philo->id);
+		printf("%ju %ju has taken a fork\n", get_timestamp(philo->data),
+			philo->id);
 	else if (status == EAT)
 		printf("%ju %ju is eating\n", get_timestamp(philo->data), philo->id);
 	else if (status == SLEEP)
@@ -47,3 +48,30 @@ bool	is_full(t_philo *philo)
 	count = get_num(&philo->m_meals, &philo->meals);
 	return ((int64_t) count == philo->data->mnum);
 }
+
+void	single(t_data *data)
+{
+	t_philo	*philo;
+
+	philo = data->philos;
+	status_put(philo, FORK);
+	real_sleep(data->ttd * 1000);
+	pthread_mutex_lock(&data->m_write);
+	printf("Stupid philosopher has starved to death while trying to figure"
+		" out how to eat with one fork.\n");
+	pthread_mutex_unlock(&data->m_write);
+}
+
+//bool	are_full(t_philo *philo)
+//{
+//	int64_t	i;
+//
+//	i = 0;
+//	while (i < philo->data->tc)
+//	{
+//		if (philo->meals < philo->data->mnum)
+//			return (false);
+//		i++;
+//	}
+//	return (true);
+//}

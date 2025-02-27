@@ -1,4 +1,4 @@
-CC		= cc
+CC		= gcc
 CFLAGS	= -Wall -Wextra -Werror -g
 SRC_DIR	:= src
 OBJ_DIR := obj
@@ -8,7 +8,7 @@ NAME	= philo
 
 all: $(NAME)
 
-sanitize: CFLAGS += -fsanitize=thread
+sanitize: CFLAGS += -fsanitize=thread -g
 sanitize: re
 
 $(NAME): $(OBJ)

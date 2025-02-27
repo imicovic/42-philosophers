@@ -6,7 +6,7 @@
 /*   By: imicovic <imicovic@student.42wolfsburg.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:10:58 by imicovic          #+#    #+#             */
-/*   Updated: 2025/02/25 15:45:29 by imicovic         ###   ########.fr       */
+/*   Updated: 2025/02/27 13:52:25 by imicovic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static bool	is_dead(t_philo *philo)
 	if (is_full(philo))
 		return (false);
 	elapsed = get_time(MILISEC) - get_num(&philo->m_lmt, &philo->lmt);
-	if (elapsed > (uint64_t) philo->data->ttd)
+	if (elapsed >= (uint64_t) philo->data->ttd)
 		return (true);
 	return (false);
 }

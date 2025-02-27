@@ -6,7 +6,7 @@
 /*   By: imicovic <imicovic@student.42wolfsburg.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 11:18:12 by imicovic          #+#    #+#             */
-/*   Updated: 2025/02/25 15:44:39 by imicovic         ###   ########.fr       */
+/*   Updated: 2025/02/27 13:29:37 by imicovic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ typedef struct s_data
 	int64_t		ttd;
 	int64_t		tts;
 	int64_t		tte;
+	int64_t		ttt;
 	int64_t		mnum;
 }	t_data;
 
@@ -104,7 +105,9 @@ void		cleanup(t_data *data);
 
 void		status_put(t_philo *philo, t_status status);
 void		inc_dec(t_mtx *mutex, uint64_t *addr, t_op op);
+void		single(t_data *data);
 bool		is_full(t_philo *philo);
+bool		are_full(t_philo *philo);
 
 /* utils/debug_utils.c */
 
@@ -136,6 +139,6 @@ bool		is_finished(t_data *data);
 
 /* threads/dinner.c */
 
-void	dinner(t_philo * philo);
+void		dinner(t_philo *philo);
 
 #endif
