@@ -1,7 +1,7 @@
 # 42-philosophers
 
 42-philosophers project is a 42 Wolfsburg introduction to multi-threaded programming. It represents a typical
-dining philosophers problem. For more information read subject.
+dining philosophers problem. For detailed information read [subject](en.subject.pdf)
 
 ## Usage
 
