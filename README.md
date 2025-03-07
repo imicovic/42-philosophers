@@ -10,3 +10,8 @@ After cloning the repository, navigate to the philo/ directory.
 ```sh
 make
 ./philo number_of_philosophers time_to_die time_to_sleep time_to_eat [number_of_meals]
+```
+
+Optional argument number_of_meals represents a way to limit the number of execution cycles. If all of the 
+philosophers have eaten at least number_of_meals times, the simulation will end. Otherwise simulation will
+end if one of the philosophers die.
